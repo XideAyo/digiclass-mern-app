@@ -1,39 +1,91 @@
-<Accordion defaultActiveKey='0' >
-                        <Card style={{margin:10}}>
-                            <Accordion.Header style={{display: "flex",}}>
-                                <span style={{
-                                    color: "black",
-                                    textDecoration: "none",
-                                    flex: 1,
-                                    cursor: "pointer",
-                                    alignSelf: "center",
-                                    fontSize: 18,
-                                }}>
-                                    <Accordion.Toggle as={Card.Text} variant='link' eventKey='0'>
-                                        {note.title}
-                                    </Accordion.Toggle>
-                                </span>
-                                <div>
-                                    <Button href={`/note/${note.id}`}>Edit</Button>
-                                    <Button variant='danger' className='mx-2' onClick={() => deleteHandler(note._id)}>Delete</Button>
-                                </div>
-                            </Accordion.Header>
-                            <Accordion.Body>
-                                    <Card.Body>
-                                        <h4>
-                                            <Badge variant="success">
-                                                Category - {note.category}
-                                            </Badge>
-                                        </h4>
-                                        <blockquote className="blockquote mb-0">
-                                            <p>
-                                            {note.content}
-                                            </p>
-                                            <footer className="blockquote-footer">
-                                                Created On - date
-                                            </footer>
-                                        </blockquote>
-                                    </Card.Body>
-                            </Accordion.Body>
-                        </Card>
-                    </Accordion>
+import React, { useState} from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import MainScreen from "../../components/MainScreen/MainScreen";
+
+const RegisterPage =() => {
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [pic, setPic] = useState(
+        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+    );
+    const [password, setPassword] = useState("");
+    const [confirmpassword, setConfirmPassword] = useState("");
+
+  return (
+    <MainScreen title="REGISTER">
+        <div className="loginContainer">
+            {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+            {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
+            {loading && <Loading />}
+            <Form>
+                <Form.Group controlId="name">
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control
+                        type="name"
+                        value={name}
+                        placeholder="Enter name"
+                        onChange={(e) => setName(e.target.value)}
+                        />
+                </Form.Group>
+                <Form.Group controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control
+                        type="email"
+                        value={email}
+                        placeholder="Enter email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        />
+                </Form.Group>
+
+                <Form.Group controlId="formBasicPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                        type="password"
+                        value={password}
+                        placeholder="Password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        />
+                </Form.Group>
+
+                <Form.Group controlId="confirmPassword">
+                    <Form.Label>Confirm Password</Form.Label>
+                        <Form.Control
+                        type="password"
+                        value={confirmpassword}
+                        placeholder="Confirm Password"
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                </Form.Group>
+
+            {/* {picMessage && (
+                <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
+            )} */}
+
+                <Form.Group controlId="pic">
+                        <Form.Label>Profile Picture</Form.Label>
+                        <Form.File
+                        // onChange={(e) => postDetails(e.target.files[0])}
+                        id="custom-file"
+                        type="image/png"
+                        label="Upload Profile Picture"
+                        custom
+                        />
+                </Form.Group>
+
+                <Button variant="primary" type="submit">
+                    Register
+                </Button>
+            </Form>
+            <Row className="py-3">
+                <Col>
+                    Have an Account ? <Link to="/login">Login</Link>
+                </Col>
+                </Row>
+        </div>
+    </MainScreen>
+  );
+}
+
+export default RegisterPage
+

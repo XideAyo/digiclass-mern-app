@@ -1,14 +1,30 @@
 import React from 'react';
 import {Navbar, Nav, Container, Button, Form, FormControl, NavDropdown} from  'react-bootstrap'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux'
+import { logout } from '../../actions/userActions';
 
-const Header = () => {
+const Header = ({setSearch}) => {
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const userLogin = useSelector(state => state.userLogin)
+
+  const {userInfo} = userLogin
+
+  const logoutHandler = () => {
+    dispatch(logout())
+
+    navigate('/')
+  }
+
   return(
     <>
         <Navbar bg="primary" expand="lg" variant='dark'>
           <Container>
             <Navbar.Brand>
-              <Link to='/'>NoteXipper</Link>
+              <Link to='/'>DigiClass</Link>
               </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">
@@ -19,10 +35,11 @@ const Header = () => {
                       placeholder="Search"
                       className="me-2"
                       aria-label="Search"
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                   </Form>
               </Nav>
-              <Nav
+              {userInfo ?<Nav
                 className=" my-2 my-lg-0"
                 style={{ maxHeight: '100px' }}
                 navbarScroll
@@ -30,14 +47,22 @@ const Header = () => {
                 <Nav.Link>
                   <Link to='/mynotes'>My Notes</Link>
                 </Nav.Link>
-                <NavDropdown title="Akinwale Ayomide" id="navbarScrollingDropdown">
-                  <NavDropdown.Item href="#action3">My Profile</NavDropdown.Item>
+                <NavDropdown title={userInfo?.name} id="navbarScrollingDropdown">
+                  <NavDropdown.Item href="/profile">My Profile</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action5">
+                  <NavDropdown.Item onClick={logoutHandler}>
                     Log Out
                   </NavDropdown.Item>
                 </NavDropdown>
-              </Nav>
+              </Nav>: <Nav>
+                  {""}
+                  <Nav.Link>
+                    <Link to='/login'>Log In</Link>
+                  </Nav.Link>
+                  <Nav.Link>
+                    <Link to='/register'>Sign Up</Link>
+                  </Nav.Link>
+                </Nav>}
           </Navbar.Collapse>
         </Container>
       </Navbar>

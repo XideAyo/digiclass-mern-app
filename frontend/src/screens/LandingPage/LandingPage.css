@@ -2,15 +2,21 @@
   min-height: 93vh;
   display: flex;
   align-items: center;
-  background-image: url('../../images/background.jpg');
+  background-image: url('../../images/marten-bjork-rH8O0FHFpfw-unsplash.jpg');
   background-position: center;
   background-size: cover;
 }
 
 .title {
   font-size: 70px;
+  color: #000;
+  font-weight: 700;
 }
-.subtitle {
+
+.blue-text {
+  color: #003399;
+}
+.sub-title {
   font-size: 25px;
   padding-top: 10px;
 }
