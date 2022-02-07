@@ -6,6 +6,7 @@ const connectDB = require('./config/db');
 const userRoutes = require("./routes/userRoutes");
 const noteRoutes = require("./routes/noteRoutes");
 const { notFound, errorHandler } = require('./middleware/errorMiddleWare');
+const path = require("path")
 
 
 const app = express();
@@ -14,13 +15,21 @@ connectDB();
 app.use(express.json())
 app.use(cors())
 
-app.get("/", (req, res) => {
-    res.send("API is running")
-})
+// ---------deployment------------
 
-// app.get("/api/notes",(req ,res) => {
-//     res.json(notes)
-// })
+const dirname = path.resolve();
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(dirname, "/frontend/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(dirname, "frontend", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is not running..");
+  });
+}
 
 app.use('/api/users', userRoutes)
 app.use('/api/notes', noteRoutes)

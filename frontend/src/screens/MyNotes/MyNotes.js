@@ -38,7 +38,7 @@ const MyNotes = ({search}) => {
     useEffect(() => {
         dispatch(listNotes())
         if(!userInfo){
-            navigate("/")
+            navigate("/mynotes")
         }
     },[dispatch, successCreate, userInfo, successUpdate, successDelete])
     

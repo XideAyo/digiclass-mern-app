@@ -9,9 +9,6 @@ const getNotes = asyncHandler(async(req, res) => {
 
 const createNote = asyncHandler(async(req, res) => {
     const {title, content} = req.body
-    // const fileName = req.file
-
-    // console.log(fileName)
 
     if(!title || ! content) {
         res.status(400)
@@ -40,8 +37,6 @@ const updateNoteById = asyncHandler(async(req, res) => {
 
     const {title, content} = req.body
 
-    const fileName = req.file.originalname
-
     if(note.user.toString() !== req.user._id.toString()){
         res.status(401)
         throw new Error("You cannot perform this action")
@@ -49,8 +44,7 @@ const updateNoteById = asyncHandler(async(req, res) => {
     
     if(note){
         note.title = title,
-        note.content = content,
-        note.fileName = fileName    
+        note.content = content
 
         const updatedNote = await note.save()
         res.json(updatedNote)

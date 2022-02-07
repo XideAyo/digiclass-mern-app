@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs")
 const generateToken = require('../utils/generateToken')
 
 const registerUser = asyncHandler( async (req, res) => {
-    const { name, email, picture, password} = req.body
+    const { name, email, password} = req.body
 
     const userExists = await User.findOne({email})
 
@@ -14,7 +14,7 @@ const registerUser = asyncHandler( async (req, res) => {
     }
 
     const user = await User.create({
-        name, email, picture, password
+        name, email,  password
     })
 
     const salt = bcrypt.genSaltSync(10);
@@ -29,7 +29,6 @@ const registerUser = asyncHandler( async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            picture: user.picture,
             token: generateToken(user._id)
         })
     }else{
@@ -53,7 +52,6 @@ const authUser = asyncHandler( async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            picture: user.picture,
             token: generateToken(user._id)
         })
     }
@@ -79,7 +77,6 @@ const updateUserProfile = asyncHandler(async(req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
-      pic: updatedUser.pic,
       isAdmin: updatedUser.isAdmin,
       token: generateToken(updatedUser._id),
     });

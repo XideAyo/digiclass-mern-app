@@ -12,8 +12,9 @@ import { useNavigate , useParams} from "react-router-dom";
 function SingleNote() {
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
-  const [media, setMedia] = useState();
   const [date, setDate] = useState("");
+
+  const url = "https://digixclass.herokuapp.com"
 
   const {id} = useParams()
   const navigate  = useNavigate()
@@ -44,11 +45,10 @@ function SingleNote() {
             },
         };
 
-      const { data } = await axios.get(`/api/notes/${id}`, config);
+      const { data } = await axios.get(`${url}/api/notes/${id}`, config);
 
       setTitle(data.title);
       setContent(data.content);
-      setMedia(data.media);
       setDate(data.updatedAt);
     };
 
@@ -57,14 +57,13 @@ function SingleNote() {
 
   const resetHandler = () => {
     setTitle("");
-    setMedia("");
     setContent("");
   };
 
   const updateHandler = (e) => {
     e.preventDefault();
-    dispatch(updateNoteAction(id, title, content, media));
-    if (!title || !content || !media) return;
+    dispatch(updateNoteAction(id, title, content));
+    if (!title || !content) return;
 
     resetHandler();
     navigate("/mynotes");
@@ -109,16 +108,6 @@ function SingleNote() {
                 </Card.Body>
               </Card>
             )}
-
-            <Form.Group controlId="content">
-              <Form.Label>Media</Form.Label>
-              <Form.Control
-                type="content"
-                placeholder="Enter the Category"
-                value={media}
-                onChange={(e) => setMedia(e.target.value)}
-              />
-            </Form.Group>
             {loading && <Loading size={50} />}
             <Button variant="primary" type="submit">
               Update Note

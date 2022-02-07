@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8af4f7d7.css",
+    "main.js": "/static/js/main.c307b081.js",
+    "static/media/marten-bjork-rH8O0FHFpfw-unsplash.jpg": "/static/media/marten-bjork-rH8O0FHFpfw-unsplash.79c19c99529ddca5e4cb.jpg",
+    "index.html": "/index.html",
+    "main.8af4f7d7.css.map": "/static/css/main.8af4f7d7.css.map",
+    "main.c307b081.js.map": "/static/js/main.c307b081.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8af4f7d7.css",
+    "static/js/main.c307b081.js"
+  ]
+}

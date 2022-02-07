@@ -13,6 +13,8 @@ import {
     NOTES_UPDATE_SUCCESS,
   } from "../constants/noteConstant";
   import axios from "axios";
+
+  const url = "https://digixclass.herokuapp.com"
   
   export const listNotes = () => async (dispatch, getState) => {
     try {
@@ -30,7 +32,7 @@ import {
             },
         };
     
-        const { data } = await axios.get(`/api/notes`, config);
+        const { data } = await axios.get(`${url}/api/notes`, config);
     
         dispatch({
             type: NOTES_LIST_SUCCESS,
@@ -69,7 +71,7 @@ import {
         };
     
         const { data } = await axios.post(
-          `/api/notes/create`,
+          `${url}/api/notes/create`,
           { title, content },
           config
         );
@@ -90,7 +92,7 @@ import {
       }
   };
 
-  export const updateNoteAction = (id, title, content, media) => async (
+  export const updateNoteAction = (id, title, content) => async (
     dispatch,
     getState
   ) => {
@@ -111,8 +113,8 @@ import {
       };
   
       const { data } = await axios.put(
-        `/api/notes/${id}`,
-        { title, content, media },
+        `${url}/api/notes/${id}`,
+        { title, content },
         config
       );
   
@@ -148,7 +150,7 @@ import {
         },
       };
   
-      const { data } = await axios.delete(`/api/notes/${id}`, config);
+      const { data } = await axios.delete(`${url}/api/notes/${id}`, config);
   
       dispatch({
         type: NOTES_DELETE_SUCCESS,

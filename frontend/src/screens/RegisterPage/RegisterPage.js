@@ -12,13 +12,9 @@ const RegisterPage = () => {
 
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
-    const [picture, setPicture] = useState(
-        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-    );
     const [password, setPassword] = useState("");
     const [confirmpassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState(null);
-    const [picMessage, setPicMessage] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -41,37 +37,12 @@ const RegisterPage = () => {
         if(password !== confirmpassword){
             setMessage("Password do not match")
         }else{
-            console.log(name, email, picture, password)
-            dispatch(register(name, email, picture, password))
-            navigate('/')
+            console.log(name, email,  password)
+            dispatch(register(name, email, password))
+            navigate('/mynotes')
         }
     }
 
-    const postDetails = (picture) => {
-
-        if(!picture){
-            return setPicMessage("Please Select an Image")
-        }
-        setPicMessage(null);
-
-        if(picture.type === 'image/jpeg' || picture.type === 'image.png'){
-            const data = new FormData()
-            data.append("file", picture)
-            data.append("upload_preset", "notexipper")
-            data.append("cloud_name", "xideayo")
-            fetch('https://api.cloudinary.com/v1_1/xideayo/image/upload', {
-                method: "post",
-                body: "data"
-            }).then((res) => res.json()).then((data) => {
-                console.log(data)
-                setPicture(data.url.toString())
-            }).catch((err) => {
-                console.log(err)
-            })
-        }else{
-            return setPicMessage("Please Select an Image")
-        }
-    }
 
   return (
     <MainScreen title='REGISTER'>
